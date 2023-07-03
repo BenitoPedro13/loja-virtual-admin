@@ -20,6 +20,7 @@ const AppMenu = () => {
             items: [
                 { label: 'Estados', icon: 'pi pi-fw pi-pencil', to: '/cadastro/estados' },
                 { label: 'Cidades', icon: 'pi pi-fw pi-pencil', to: '/cadastro/cidades' },
+                { label: 'Marcas', icon: 'pi pi-fw pi-pencil', to: '/cadastro/marcas' },
             ]
         },
         {
