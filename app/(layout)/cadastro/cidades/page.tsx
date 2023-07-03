@@ -10,29 +10,28 @@ import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
 import React, { useEffect, useRef, useState } from "react";
-import { EstadoService } from "../../../demo/service/cadastro/EstadoService";
+import { CidadeService } from "../../../demo/service/cadastro/CidadeService";
 import { Demo } from "../../../../types/types";
 
-const CrudEstados = () => {
-  let emptyObject: Demo.Estado = {
+const CrudCidades = () => {
+  let emptyObject: Demo.Cidade = {
     nome: "",
-    sigla: "",
   };
 
-  const [objects, setObjects] = useState<Demo.Estado[]>([]);
+  const [objects, setObjects] = useState<Demo.Cidade[]>([]);
   const [objectDialog, setObjectDialog] = useState(false);
   const [deleteObjectDialog, setDeleteObjectDialog] = useState(false);
   const [deleteObjectsDialog, setDeleteObjectsDialog] = useState(false);
-  const [object, setObject] = useState<Demo.Estado>(emptyObject);
-  const [selectedObjects, setSelectedObjects] = useState<Demo.Estado[]>([]);
+  const [object, setObject] = useState<Demo.Cidade>(emptyObject);
+  const [selectedObjects, setSelectedObjects] = useState<Demo.Cidade[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
-  const dt = useRef<DataTable<Demo.Estado[]>>(null);
+  const dt = useRef<DataTable<Demo.Cidade[]>>(null);
 
   useEffect(() => {
     if (objects.length === 0) {
-      EstadoService.getAll().then((data) => (data ? setObjects(data) : null));
+      CidadeService.getAll().then((data) => (data ? setObjects(data) : null));
     }
   }, [objects]);
 
@@ -64,13 +63,13 @@ const CrudEstados = () => {
       if (object.id) {
         const index = findIndexById(object.id);
 
-        await EstadoService.update(_object)
+        await CidadeService.update(_object)
           .then((data) => {
             if (!data) {
               return toast.current?.show({
                 severity: "error",
                 summary: "Erro",
-                detail: "Erro ao Atualizar Estado",
+                detail: "Erro ao Atualizar Cidade",
                 life: 3000,
               });
             }
@@ -81,7 +80,7 @@ const CrudEstados = () => {
             toast.current?.show({
               severity: "success",
               summary: "Sucesso",
-              detail: "Estado Atualizado",
+              detail: "Cidade Atualizado",
               life: 3000,
             });
           })
@@ -91,18 +90,18 @@ const CrudEstados = () => {
             return toast.current?.show({
               severity: "error",
               summary: "Erro",
-              detail: `Erro ao Atualizar Estado: ${error}`,
+              detail: `Erro ao Atualizar Cidade: ${error}`,
               life: 3000,
             });
           });
       } else {
-        await EstadoService.create(_object)
+        await CidadeService.create(_object)
           .then((data) => {
             if (!data) {
               return toast.current?.show({
                 severity: "error",
                 summary: "Erro",
-                detail: "Erro ao Criar Estado",
+                detail: "Erro ao Criar Cidade",
                 life: 3000,
               });
             }
@@ -113,7 +112,7 @@ const CrudEstados = () => {
             toast.current?.show({
               severity: "success",
               summary: "Sucesso",
-              detail: "Estado Criado",
+              detail: "Cidade Criado",
               life: 3000,
             });
           })
@@ -123,7 +122,7 @@ const CrudEstados = () => {
             return toast.current?.show({
               severity: "error",
               summary: "Erro",
-              detail: `Erro ao Criar Estado: ${error}`,
+              detail: `Erro ao Criar Cidade: ${error}`,
               life: 3000,
             });
           });
@@ -135,12 +134,12 @@ const CrudEstados = () => {
     }
   };
 
-  const editProduct = (product: Demo.Estado) => {
+  const editProduct = (product: Demo.Cidade) => {
     setObject({ ...product });
     setObjectDialog(true);
   };
 
-  const confirmDeleteProduct = (product: Demo.Estado) => {
+  const confirmDeleteProduct = (product: Demo.Cidade) => {
     setObject(product);
     setDeleteObjectDialog(true);
   };
@@ -152,7 +151,7 @@ const CrudEstados = () => {
     if (_object.id) {
       const index = findIndexById(_object.id);
 
-      await EstadoService.delete(_object.id)
+      await CidadeService.delete(_object.id)
         .then((ok) => {
           if (index !== -1 && ok) {
             _objects.splice(index, 1);
@@ -160,14 +159,14 @@ const CrudEstados = () => {
             toast.current?.show({
               severity: "success",
               summary: "Sucesso",
-              detail: "Estado Deletado",
+              detail: "Cidade Deletado",
               life: 3000,
             });
           } else {
             toast.current?.show({
               severity: "error",
               summary: "Erro",
-              detail: "Erro ao Deletar Estado.",
+              detail: "Erro ao Deletar Cidade.",
               life: 3000,
             });
           }
@@ -178,7 +177,7 @@ const CrudEstados = () => {
           return toast.current?.show({
             severity: "error",
             summary: "Erro",
-            detail: `Erro ao Deletar Estado: ${error}`,
+            detail: `Erro ao Deletar Cidade: ${error}`,
             life: 3000,
           });
         });
@@ -219,8 +218,8 @@ const CrudEstados = () => {
     const selectedProductIds = selectedObjects.map((product) => product.id as number);
 
     try {
-      // Call the bulkDelete method of EstadoService
-      await EstadoService.bulkDelete(selectedProductIds).then((ok) => {
+      // Call the bulkDelete method of CidadeService
+      await CidadeService.bulkDelete(selectedProductIds).then((ok) => {
         if (ok) {
           const _objects = objects.filter(
             (object) => !selectedProductIds.includes(object.id as number)
@@ -230,7 +229,7 @@ const CrudEstados = () => {
           toast.current?.show({
             severity: "success",
             summary: "Sucesso",
-            detail: "Estados Deletados",
+            detail: "Cidades Deletados",
             life: 3000,
           });
 
@@ -239,7 +238,7 @@ const CrudEstados = () => {
           toast.current?.show({
             severity: "error",
             summary: "Erro",
-            detail: "Erro ao Deletar Estados.",
+            detail: "Erro ao Deletar Cidades.",
             life: 3000,
           });
         }
@@ -250,15 +249,16 @@ const CrudEstados = () => {
       return toast.current?.show({
         severity: "error",
         summary: "Erro",
-        detail: `Erro ao Deletar Estados: ${error}`,
+        detail: `Erro ao Deletar Cidades: ${error}`,
         life: 3000,
       });
     }
+    hideDeleteObjectsDialog();
   };
 
   const onInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    name: keyof Demo.Estado
+    name: keyof Demo.Cidade
   ) => {
     const val = (e.target && e.target.value) || "";
     let _object = { ...object };
@@ -303,7 +303,7 @@ const CrudEstados = () => {
     );
   };
 
-  const codeBodyTemplate = (rowData: Demo.Estado) => {
+  const codeBodyTemplate = (rowData: Demo.Cidade) => {
     return (
       <>
         <span className="p-column-title">ID</span>
@@ -312,7 +312,7 @@ const CrudEstados = () => {
     );
   };
 
-  const nameBodyTemplate = (rowData: Demo.Estado) => {
+  const nameBodyTemplate = (rowData: Demo.Cidade) => {
     return (
       <>
         <span className="p-column-title">Nome</span>
@@ -321,16 +321,16 @@ const CrudEstados = () => {
     );
   };
 
-  const siglaBodyTemplate = (rowData: Demo.Estado) => {
+  const stateBodyTemplate = (rowData: Demo.Cidade) => {
     return (
       <>
-        <span className="p-column-title">Sigla</span>
-        {rowData.sigla}
+        <span className="p-column-title">Estado</span>
+        {rowData.estado ? `${rowData.estado.nome} / ${rowData.estado.sigla}` : ''}
       </>
     );
   };
 
-  const actionBodyTemplate = (rowData: Demo.Estado) => {
+  const actionBodyTemplate = (rowData: Demo.Cidade) => {
     return (
       <>
         <Button
@@ -352,7 +352,7 @@ const CrudEstados = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">Gerencie Estados</h5>
+      <h5 className="m-0">Gerencie Cidades</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -414,7 +414,7 @@ const CrudEstados = () => {
             value={objects}
             selection={selectedObjects}
             onSelectionChange={(e) =>
-              setSelectedObjects(e.value as Demo.Estado[])
+              setSelectedObjects(e.value as Demo.Cidade[])
             }
             dataKey="id"
             paginator
@@ -422,10 +422,10 @@ const CrudEstados = () => {
             rowsPerPageOptions={[5, 10, 25]}
             className="datatable-responsive"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Mostrando {first} ate {last} de {totalRecords} estados"
+            currentPageReportTemplate="Mostrando {first} ate {last} de {totalRecords} cidades"
             globalFilterFields={["nome", "sigla", "id"]}
             globalFilter={globalFilter}
-            emptyMessage="Nenhum Estado encontrado."
+            emptyMessage="Nenhum Cidade encontrado."
             header={header}
             responsiveLayout="scroll"
           >
@@ -441,19 +441,20 @@ const CrudEstados = () => {
               headerStyle={{ minWidth: "1rem" }}
             ></Column>
             <Column
-              field="sigla"
-              header="Sigla"
-              sortable
-              body={siglaBodyTemplate}
-              headerStyle={{ minWidth: "5rem" }}
-            ></Column>
-            <Column
               field="nome"
               header="Nome"
               sortable
               body={nameBodyTemplate}
               headerStyle={{ minWidth: "10rem" }}
             ></Column>
+            <Column
+              field="estado"
+              header="Estado"
+              sortable
+              body={stateBodyTemplate}
+              headerStyle={{ minWidth: "5rem" }}
+            ></Column>
+            
             <Column
               header="Açoes"
               align="center"
@@ -465,7 +466,7 @@ const CrudEstados = () => {
           <Dialog
             visible={objectDialog}
             style={{ width: "450px" }}
-            header="Detalhes do Estado"
+            header="Detalhes do Cidade"
             modal
             className="p-fluid"
             footer={productDialogFooter}
@@ -487,7 +488,7 @@ const CrudEstados = () => {
                 <small className="p-invalid">Nome e obrigatorio.</small>
               )}
             </div>
-            <div className="field">
+            {/* <div className="field">
               <label htmlFor="sigla">Sigla</label>
               <InputText
                 id="sigla"
@@ -502,7 +503,7 @@ const CrudEstados = () => {
               {submitted && !object.sigla && (
                 <small className="p-invalid">Sigla e obrigatorio.</small>
               )}
-            </div>
+            </div> */}
           </Dialog>
 
           <Dialog
@@ -541,7 +542,7 @@ const CrudEstados = () => {
               />
               {object && (
                 <span>
-                  Tem certeza que deseja deletar os estados selecionados ?
+                  Tem certeza que deseja deletar as cidades selecionadas ?
                 </span>
               )}
             </div>
@@ -552,4 +553,4 @@ const CrudEstados = () => {
   );
 };
 
-export default CrudEstados;
+export default CrudCidades;

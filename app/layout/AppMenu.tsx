@@ -17,7 +17,10 @@ const AppMenu = () => {
         },
         {
             label: 'Cadastros',
-            items: [{ label: 'Estados', icon: 'pi pi-fw pi-pencil', to: '/cadastro/estados' }]
+            items: [
+                { label: 'Estados', icon: 'pi pi-fw pi-pencil', to: '/cadastro/estados' },
+                { label: 'Cidades', icon: 'pi pi-fw pi-pencil', to: '/cadastro/cidades' },
+            ]
         },
         {
             label: 'UI Components',

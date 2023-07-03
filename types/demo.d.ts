@@ -142,6 +142,15 @@ declare namespace Demo {
         dataAtualizacao?: string;
     };
 
+    //Cidade
+    type Cidade = {
+        id?: number;
+        nome: string;
+        estado?: Estado;
+        dataCriacao?: string;
+        dataAtualizacao?: string;
+    };
+
     type ProductOrder = {
         id?: string;
         productCode?: string;
