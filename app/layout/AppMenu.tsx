@@ -22,6 +22,7 @@ const AppMenu = () => {
                 { label: 'Cidades', icon: 'pi pi-fw pi-pencil', to: '/cadastro/cidades' },
                 { label: 'Marcas', icon: 'pi pi-fw pi-pencil', to: '/cadastro/marcas' },
                 { label: 'Categorias', icon: 'pi pi-fw pi-pencil', to: '/cadastro/categorias' },
+                { label: 'Permissões', icon: 'pi pi-fw pi-pencil', to: '/cadastro/permissoes' },
             ]
         },
         {
