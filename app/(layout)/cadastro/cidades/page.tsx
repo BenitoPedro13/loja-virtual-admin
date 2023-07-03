@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -11,14 +12,17 @@ import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
 import React, { useEffect, useRef, useState } from "react";
 import { CidadeService } from "../../../demo/service/cadastro/CidadeService";
+import { EstadoService } from "../../../demo/service/cadastro/EstadoService";
 import { Demo } from "../../../../types/types";
 
 const CrudCidades = () => {
   let emptyObject: Demo.Cidade = {
     nome: "",
+    estado: undefined,
   };
 
   const [objects, setObjects] = useState<Demo.Cidade[]>([]);
+  const [estados, setEstados] = useState<Demo.Estado[]>([]);
   const [objectDialog, setObjectDialog] = useState(false);
   const [deleteObjectDialog, setDeleteObjectDialog] = useState(false);
   const [deleteObjectsDialog, setDeleteObjectsDialog] = useState(false);
@@ -34,6 +38,10 @@ const CrudCidades = () => {
       CidadeService.getAll().then((data) => (data ? setObjects(data) : null));
     }
   }, [objects]);
+
+  useEffect(() => {
+    EstadoService.getAll().then((data) => (data ? setEstados(data) : null));
+  }, []);
 
   const openNew = () => {
     setObject(emptyObject);
@@ -215,7 +223,9 @@ const CrudCidades = () => {
     }
 
     // Extract the ids of the selected objects
-    const selectedProductIds = selectedObjects.map((product) => product.id as number);
+    const selectedProductIds = selectedObjects.map(
+      (product) => product.id as number
+    );
 
     try {
       // Call the bulkDelete method of CidadeService
@@ -257,7 +267,7 @@ const CrudCidades = () => {
   };
 
   const onInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | DropdownChangeEvent,
     name: keyof Demo.Cidade
   ) => {
     const val = (e.target && e.target.value) || "";
@@ -325,7 +335,7 @@ const CrudCidades = () => {
     return (
       <>
         <span className="p-column-title">Estado</span>
-        {rowData.estado ? `${rowData.estado.nome} / ${rowData.estado.sigla}` : ''}
+        {rowData.estado && `${rowData.estado.nome} / ${rowData.estado.sigla}`}
       </>
     );
   };
@@ -454,7 +464,6 @@ const CrudCidades = () => {
               body={stateBodyTemplate}
               headerStyle={{ minWidth: "5rem" }}
             ></Column>
-            
             <Column
               header="Açoes"
               align="center"
@@ -488,22 +497,24 @@ const CrudCidades = () => {
                 <small className="p-invalid">Nome e obrigatorio.</small>
               )}
             </div>
-            {/* <div className="field">
-              <label htmlFor="sigla">Sigla</label>
-              <InputText
-                id="sigla"
-                value={object.sigla}
-                onChange={(e) => onInputChange(e, "sigla")}
-                required
-                autoFocus
-                className={classNames({
-                  "p-invalid": submitted && !object.sigla,
-                })}
+            <div className="field">
+              <label htmlFor="estado">Estado</label>
+              <Dropdown
+                id="estado"
+                value={object.estado}
+                onChange={(e) => onInputChange(e, "estado")}
+                options={estados}
+                optionLabel="nome"
+                placeholder="Selecione um Estado"
+                filter
+                // valueTemplate={selectedCountryTemplate}
+                // itemTemplate={countryOptionTemplate}
+                className="w-full md:w-14rem"
               />
-              {submitted && !object.sigla && (
-                <small className="p-invalid">Sigla e obrigatorio.</small>
+              {submitted && !object.estado && (
+                <small className="p-invalid">Estado e obrigatorio.</small>
               )}
-            </div> */}
+            </div>
           </Dialog>
 
           <Dialog
