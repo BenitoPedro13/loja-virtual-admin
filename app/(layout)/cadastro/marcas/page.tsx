@@ -253,6 +253,7 @@ const CrudMarcas = () => {
         life: 3000,
       });
     }
+    hideDeleteObjectsDialog();
   };
 
   const onInputChange = (
