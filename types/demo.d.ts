@@ -151,6 +151,52 @@ declare namespace Demo {
         dataAtualizacao?: string;
     };
 
+    type Marca = {
+        id?: number;
+        nome: string;
+        dataCriacao?: string;
+        dataAtualizacao?: string;
+    };
+
+    type Categoria = {
+        id?: number;
+        nome: string;
+        dataCriacao?: string;
+        dataAtualizacao?: string;
+    };
+
+    type Permissao = {
+        id?: number;
+        nome: string;
+        dataCriacao?: string;
+        dataAtualizacao?: string;
+    };
+
+    type Produto = {
+        id?: number;
+        nome: string;
+        descricaoCurta: string;
+        descricaoLonga: string;
+        valorCusto: number;
+        valorVenda: number;
+        marca: Marca;
+        categoria: Categoria;
+        dataCriacao?: string;
+        dataAtualizacao?: string;
+    };
+
+    type Pessoa = {
+        id?: number;
+        cpf: string;
+        email: string;
+        senha?: string;
+        endereco?: string;
+        cep?: string;
+        cidade?: Cidade;
+        dataCriacao?: string;
+        dataAtualizacao?: string;
+    };
+
     type ProductOrder = {
         id?: string;
         productCode?: string;
