@@ -11,8 +11,7 @@ import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
 import React, { useEffect, useRef, useState } from "react";
-import { CidadeService } from "../../../demo/service/cadastro/CidadeService";
-import { EstadoService } from "../../../demo/service/cadastro/EstadoService";
+import { CidadeService, EstadoService } from "../../../demo/service/cadastro/BaseService";
 import { Demo } from "../../../../types/types";
 
 const CrudCidades = () => {
