@@ -507,8 +507,6 @@ const CrudCidades = () => {
                 optionLabel="nome"
                 placeholder="Selecione um Estado"
                 filter
-                // valueTemplate={selectedCountryTemplate}
-                // itemTemplate={countryOptionTemplate}
                 className="w-full md:w-14rem"
               />
               {submitted && !object.estado && (
