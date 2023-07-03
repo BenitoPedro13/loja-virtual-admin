@@ -507,7 +507,9 @@ const CrudCidades = () => {
                 optionLabel="nome"
                 placeholder="Selecione um Estado"
                 filter
-                className="w-full md:w-14rem"
+                className={classNames({
+                  "p-invalid": submitted && !object.nome,
+                })}
               />
               {submitted && !object.estado && (
                 <small className="p-invalid">Estado e obrigatorio.</small>
