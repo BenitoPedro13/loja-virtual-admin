@@ -210,21 +210,21 @@ const CrudEstados = () => {
   };
 
   const deleteSelectedProducts = async () => {
-    // Extract the ids of the selected objects
-    const selectedProductIds = selectedObjects.map((product) => product.id);
-
     // Assuming selectedObjects is an array of selected product objects
-    if (!Array.isArray(selectedObjects) || selectedObjects.length === 0 || !selectedObjects) {
+    if (!Array.isArray(selectedObjects) || selectedObjects.length === 0) {
       console.error("selectedObjects must be an array and cannot be empty");
       return;
     }
+
+    // Extract the ids of the selected objects
+    const selectedProductIds = selectedObjects.map((product) => product.id as number);
 
     try {
       // Call the bulkDelete method of EstadoService
       await EstadoService.bulkDelete(selectedProductIds).then((ok) => {
         if (ok) {
           const _objects = objects.filter(
-            (object) => !selectedProductIds.includes(object.id)
+            (object) => !selectedProductIds.includes(object.id as number)
           );
           setObjects(_objects);
 
@@ -294,13 +294,6 @@ const CrudEstados = () => {
   const rightToolbarTemplate = () => {
     return (
       <React.Fragment>
-        <FileUpload
-          mode="basic"
-          accept="image/*"
-          maxFileSize={1000000}
-          chooseLabel="Import"
-          className="mr-2 inline-block"
-        />
         <Button
           label="Export"
           icon="pi pi-upload"
